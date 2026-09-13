@@ -1,0 +1,116 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 2.5vw;
+    background-color: rgb(20, 20, 20);
+    margin: 2vw;
+}
+
+.title {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    color: blue;
+    -webkit-text-stroke: 0.5px white;
+    font-family: "Archivo Black", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.list-title {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1vh;
+    color: blue;
+    -webkit-text-stroke: 0.5px white;
+    font-family: "Archivo Black", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.list {
+    grid-column: 1;
+    color: whitesmoke;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 0.5vw;
+    gap: 0.5vw;
+    min-width: 10vw;
+    width: fit-content;
+    min-height: 32vw;
+    height: fit-content;
+}
+
+.bracket {
+    display: flex;
+    grid-column: 2;
+    color: whitesmoke;
+    border: 1px solid white;
+    width: 100%;
+    min-height: 32vw;
+    height: fit-content;
+    padding: 1vw;
+}
+
+.bracket-column-match {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid green;
+    height: auto;
+    width: fit-content;
+    gap: 1vw;
+}
+
+.bracket-match {
+    border: 1px solid yellow;
+    width: 5vw;
+}
+
+.match {
+    border: 1px solid red;
+    width: 100%;
+}
+
+.form-list {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+}
+
+.text-input {
+    border-radius: 15px;
+    border-color: blue;
+    background-color: black;
+    color: whitesmoke;
+    padding: 5px;
+}
+
+.button {
+    border-radius: 15px;
+    border-color: blue;
+    background-color: black;
+    color: whitesmoke;
+    padding: 5px;
+}
+
+.button:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.error-message {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    color: red;
+}
