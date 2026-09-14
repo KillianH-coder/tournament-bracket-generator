@@ -21,7 +21,7 @@ body {
     font-family: "Titan One", sans-serif;
     font-weight: 700;
     font-style: normal;
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 4vw, 2rem);
     -webkit-text-stroke: 2px whitesmoke;
 }
 
@@ -34,69 +34,115 @@ body {
     font-family: "Titan One", sans-serif;
     font-weight: 700;
     font-style: normal;
-    font-size: 1.5rem;
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
     -webkit-text-stroke: 1px whitesmoke;
 }
 
 .list {
     grid-column: 1;
-    color: blue;
+    color: black;
+    background-color: rgba(245, 245, 245, 0.3);
     border: 5px outset pink;
     border-radius: 10px;
     padding: 0.5vw;
     gap: 0.5vw;
-    min-width: 10vw;
+    min-width: 12vw;
     width: fit-content;
     min-height: 32vw;
     height: fit-content;
     font-family: "Luckiest Guy", cursive;
     font-weight: 400;
     font-style: normal;
-    font-size: 1.2rem;
+    font-size: clamp(1.2rem, 2.8vw, 1.8rem);
     -webkit-text-stroke: 1px whitesmoke;
 }
 
 .bracket {
+    --col-gap: clamp(1.5rem, 5vw, 4vw);
     display: flex;
     grid-column: 2;
+    align-items: stretch;
+    background-color: rgba(245, 245, 245, 0.3);
     border: 5px outset pink;
     border-radius: 10px;
     width: 100%;
     min-height: 32vw;
-    height: fit-content;
+    height: 100%;
     padding: 1vw;
-    gap: 2.5vw;
+    gap: var(--col-gap);
 }
 
 .bracket-column-match {
+    --row-gap: 2.5vw;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    border: 1px solid green;
-    height: auto;
-    width: fit-content;
-    gap: 1vw;
+    height: 100%;
+    min-width: 100px;
+    width: 8vw;
+    gap: var(--row-gap);
 }
 
 .bracket-match {
-    border: 1px solid yellow;
-    width: 5vw;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+/* plain incoming stub, left side, every column except the first */
+.bracket-column-match:not(:first-child) .bracket-match::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: calc(var(--col-gap) / -2);
+    width: calc(var(--col-gap) / 2);
+    height: 2px;
+    background: black;
+}
+
+/* elbow: top-of-pair — goes right then down, every column except the last */
+.bracket-column-match:not(:last-child) .bracket-match:nth-child(odd)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    height: calc(50% + var(--row-gap) / 2);
+    right: calc(var(--col-gap) / -2);
+    width: calc(var(--col-gap) / 2);
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+}
+
+/* elbow: bottom-of-pair — goes up then right, every column except the last */
+.bracket-column-match:not(:last-child) .bracket-match:nth-child(even)::after {
+    content: "";
+    position: absolute;
+    top: -1.25vw;
+    height: calc(50% + var(--row-gap) / 2);
+    right: calc(var(--col-gap) / -2);
+    width: calc(var(--col-gap) / 2);
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
 }
 
 .match {
     color: black;
-    border: 1px solid red;
+    background-color: white;
+    border: 1px solid black;
     width: 100%;
-    height: 1vw;
-    font-family: "Titan One", sans-serif;
-    font-style: normal;
-    font-size: 0.7rem;
+    min-height: 1.8em;
+    font-size: clamp(0.75rem, 1.5vw, 1rem);
+    padding: 2px;
 }
 
 .form-list {
     grid-column: 1 / -1;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 1vw;
 }
 
 .text-input {
@@ -108,12 +154,12 @@ body {
     font-family: "Luckiest Guy", cursive;
     font-weight: 400;
     font-style: normal;
+    max-width: 90vw;
 }
 
 .text-input:focus {
     outline: none;
     border-color: pink;
-    box-shadow: 0 0 15px white;
 }
 
 .button {
@@ -132,7 +178,6 @@ body {
     background-color: black;
     color: whitesmoke;
     cursor: pointer;
-    box-shadow: 0 0 15px white;
 }
 
 .error-message {
@@ -140,4 +185,25 @@ body {
     display: flex;
     justify-content: center;
     color: red;
+}
+
+@media (max-width: 768px) {
+    body {
+        grid-template-columns: 1fr;
+        gap: 4vw;
+        margin: 4vw;
+    }
+
+    .list {
+        grid-column: 1;
+        width: 100%;
+        min-width: 0;
+        min-height: auto;
+    }
+
+    .bracket {
+        grid-column: 1;
+        overflow: auto;
+        min-height: auto;
+    }
 }

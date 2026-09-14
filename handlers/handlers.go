@@ -11,10 +11,11 @@ var tmpl = template.Must(template.ParseGlob("./templates/*.html"))
 
 // Struct for datas
 type Datas struct {
-	Names           []string
 	Error           string
-	GenerateBracket bool
+	Names           []string
 	Rounds          [][][]string
+	GenerateBracket bool
+	StartSimulation bool
 }
 
 var datas = &Datas{}
@@ -150,8 +151,11 @@ func DeleteBracket(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
-func Winner(w http.ResponseWriter, r *http.Request) {
-	// winner := r.FormValue("winner")
+func StartSimulation(w http.ResponseWriter, r *http.Request) {
+	if !datas.StartSimulation {
+		// Don"t start simulation
+	}
+}
 
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+func Winner(w http.ResponseWriter, r *http.Request) {
 }
