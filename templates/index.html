@@ -31,8 +31,8 @@
         {{end}}
     </div>
 
-    {{if .GenerateBracket}}
     <div class="bracket">
+        {{if .GenerateBracket}}
         {{range .Rounds}}
         <div class="bracket-column-match" id="bracket">
             {{range .}}
@@ -44,23 +44,25 @@
             {{end}}
         </div>
         {{end}}
+        {{end}}
     </div>
-    {{end}}
 
-    <form method="post">
-        <div class="simulation">
+    <div class="simulation">
+        <form class="form-simulation" method="post">
             <button class="button" type="submit" name="simulation" href="/simulation">Start Simulation</button>
             <button class="button" type="submit" name="simulation">Stop Simulation</button>
-        </div>
-    </form>
+        </form>
+    </div>
 
-    <div class="form-list">
-        <form method="POST">
+    <div class="list-buttons">
+        <form class="form-list" method="POST">
             <input class="text-input" type="text" name="name" autocomplete="off" placeholder="Enter name...">
-            <button class="button" type="submit" name="action" value="add">Add</button>
-            <button class="button" type="submit" name="action" value="clear">Clear</button>
-            <button class="button" type="submit" name="action" value="generate">Generate Bracket</button>
-            <button class="button" type="submit" name="action" value="delete" id="delete-bracket">Delete
+            <button class="form-button" type="submit" name="action" value="add">Add</button>
+            <button class="form-button" type="submit" name="action" value="clear">Clear</button>
+            <button class="form-button" type="submit" name="action" value="generate">Generate
+                Bracket</button>
+            <button class="form-button" class="button" type="submit" name="action" value="delete"
+                id="delete-bracket">Delete
                 Bracket</button>
         </form>
     </div>

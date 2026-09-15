@@ -17,6 +17,7 @@ body {
     grid-column: 1 / -1;
     display: flex;
     justify-content: center;
+    text-align: center;
     color: pink;
     font-family: "Titan One", sans-serif;
     font-weight: 700;
@@ -53,7 +54,7 @@ body {
     font-family: "Luckiest Guy", cursive;
     font-weight: 400;
     font-style: normal;
-    font-size: clamp(1.2rem, 2.8vw, 1.8rem);
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
     -webkit-text-stroke: 1px whitesmoke;
 }
 
@@ -66,7 +67,6 @@ body {
     border: 5px outset pink;
     border-radius: 10px;
     width: 100%;
-    min-height: 32vw;
     height: 100%;
     padding: 1vw;
     gap: var(--col-gap);
@@ -137,15 +137,34 @@ body {
     padding: 2px;
 }
 
-.form-list {
+.list-buttons {
     grid-column: 1 / -1;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 1vw;
+    gap: 2vw;
+}
+
+.form-list {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 2vw;
+}
+
+.form-button {
+    grid-row: 2;
+    border-radius: 15px;
+    border-color: pink;
+    background-color: whitesmoke;
+    color: black;
+    padding: 5px;
+    font-family: "Luckiest Guy", cursive;
+    font-weight: 400;
+    font-style: normal;
+    transition: 0.3s;
 }
 
 .text-input {
+    grid-column: 1 / -1;
     border-radius: 15px;
     border-color: pink;
     background-color: whitesmoke;
@@ -166,7 +185,11 @@ body {
     grid-column: 1 / -1;
     display: flex;
     justify-content: center;
-    gap: 1vw;
+}
+
+.form-simulation {
+    display: flex;
+    gap: 2vw;
 }
 
 .button {
@@ -192,14 +215,20 @@ body {
     grid-column: 1 / -1;
     display: flex;
     justify-content: center;
+    text-align: center;
     color: red;
+    font-family: "Titan One", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    -webkit-text-stroke: 1px whitesmoke;
 }
 
 @media (max-width: 768px) {
     body {
         grid-template-columns: 1fr;
-        gap: 4vw;
-        margin: 4vw;
+        gap: 15vw;
+        margin: 5vw;
     }
 
     .list {
@@ -212,6 +241,7 @@ body {
     .bracket {
         grid-column: 1;
         overflow: auto;
-        min-height: auto;
+        min-height: 30vh;
+        height: fit-content;
     }
 }
