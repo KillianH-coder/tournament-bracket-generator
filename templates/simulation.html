@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <title>Tournament</title>
+    <title>Tournament Simulation</title>
 </head>
 
 <body>
     <h1>Simulation</h1>
 
-    {{if .StartSimulation}}
     <div class="bracket">
+        {{if .StartSimulation}}
         {{range .Rounds}}
         <div class="bracket-column-match" id="bracket">
             {{range .}}
@@ -24,8 +24,8 @@
             {{end}}
         </div>
         {{end}}
+        {{end}}
     </div>
-    {{end}}
 
 </body>
 

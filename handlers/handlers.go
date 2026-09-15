@@ -37,20 +37,33 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl.Execute(w, datas)
+	tmpl.ExecuteTemplate(w, "index.html", datas)
 }
 
 func SimulationHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
-		if datas.StartSimulation == true {
+		if datas.StartSimulation {
 			datas.Error = "simulation already started"
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
 		}
 
-		datas.StartSimulation = true
+		if !datas.GenerateBracket {
+			datas.Error = "generate bracket first"
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+			return
+		}
+
+		action := r.FormValue("simulation")
+		switch action {
+		case "start":
+			datas.StartSimulation = true
+		case "stop":
+			datas.StartSimulation = false
+		}
 	}
 
-	tmpl.Execute(w, datas)
+	tmpl.ExecuteTemplate(w, "simulation.html", datas)
 }
 
 // Add players to the list
@@ -59,22 +72,22 @@ func AddNameHandler(w http.ResponseWriter, r *http.Request) {
 
 	// If name is empty
 	if name == "" {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
 		datas.Error = "Name cannot be empty"
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 
 	// If name have more than 10 chars
 	if len(name) > 10 {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
 		datas.Error = "Name cannot be longer than 10 characters"
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 
 	// If name already exist
 	if slices.Contains(datas.Names, name) {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
 		datas.Error = "Name already exists"
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 
@@ -166,7 +179,9 @@ func DeleteBracket(w http.ResponseWriter, r *http.Request) {
 
 func StartSimulation(w http.ResponseWriter, r *http.Request) {
 	if !datas.StartSimulation {
-		// Don"t start simulation
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		datas.Error = "simulation already started"
+		return
 	}
 }
 

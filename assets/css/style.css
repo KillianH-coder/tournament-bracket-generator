@@ -137,17 +137,28 @@ body {
     padding: 2px;
 }
 
+.simulation {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+}
+
+.form-simulation {
+    display: flex;
+    gap: 2vw;
+}
+
 .list-buttons {
     grid-column: 1 / -1;
     display: flex;
     justify-content: center;
-    gap: 2vw;
+    gap: 1vw;
 }
 
 .form-list {
     display: grid;
     grid-template-columns: auto auto auto auto;
-    gap: 2vw;
+    gap: 1vw;
 }
 
 .form-button {
@@ -179,17 +190,6 @@ body {
 .text-input:focus {
     outline: none;
     border-color: pink;
-}
-
-.simulation {
-    grid-column: 1 / -1;
-    display: flex;
-    justify-content: center;
-}
-
-.form-simulation {
-    display: flex;
-    gap: 2vw;
 }
 
 .button {
