@@ -7,7 +7,7 @@
 body {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto;
     gap: 2.5vw;
     background-color: rgb(126, 229, 255);
     margin: 2vw;
@@ -162,6 +162,13 @@ body {
     border-color: pink;
 }
 
+.simulation {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    gap: 1vw;
+}
+
 .button {
     border-radius: 15px;
     border-color: pink;
@@ -175,7 +182,8 @@ body {
 }
 
 .button:hover {
-    background-color: black;
+    background-color: pink;
+    border-color: white;
     color: whitesmoke;
     cursor: pointer;
 }

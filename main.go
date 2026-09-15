@@ -10,6 +10,7 @@ import (
 func main() {
 	// Handle routes
 	http.HandleFunc("/", handlers.IndexHandler)
+	http.HandleFunc("/simulation", handlers.SimulationHandler)
 
 	// Handle assets
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets"))))

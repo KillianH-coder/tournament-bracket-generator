@@ -14,9 +14,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
-    <script src="/assets/js/script.js"></script>
 
-    <title>Bracket Generator</title>
+    <title>Tournament Generator</title>
 </head>
 
 <body>
@@ -47,6 +46,13 @@
         {{end}}
     </div>
     {{end}}
+
+    <form method="post">
+        <div class="simulation">
+            <button class="button" type="submit" name="simulation" href="/simulation">Start Simulation</button>
+            <button class="button" type="submit" name="simulation">Stop Simulation</button>
+        </div>
+    </form>
 
     <div class="form-list">
         <form method="POST">

@@ -40,6 +40,19 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, datas)
 }
 
+func SimulationHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPost {
+		if datas.StartSimulation == true {
+			datas.Error = "simulation already started"
+			return
+		}
+
+		datas.StartSimulation = true
+	}
+
+	tmpl.Execute(w, datas)
+}
+
 // Add players to the list
 func AddNameHandler(w http.ResponseWriter, r *http.Request) {
 	name := r.FormValue("name")
