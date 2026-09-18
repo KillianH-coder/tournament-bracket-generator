@@ -4,13 +4,20 @@
     padding: 0;
 }
 
-body {
+.home-body {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-rows: auto auto auto auto auto;
     gap: 2.5vw;
     background-color: rgb(126, 229, 255);
     margin: 2vw;
+}
+
+.simulation-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(126, 229, 255);
 }
 
 .title {
@@ -161,19 +168,6 @@ body {
     gap: 1vw;
 }
 
-.form-button {
-    grid-row: 2;
-    border-radius: 15px;
-    border-color: pink;
-    background-color: whitesmoke;
-    color: black;
-    padding: 5px;
-    font-family: "Luckiest Guy", cursive;
-    font-weight: 400;
-    font-style: normal;
-    transition: 0.3s;
-}
-
 .text-input {
     grid-column: 1 / -1;
     border-radius: 15px;
@@ -202,6 +196,26 @@ body {
     font-weight: 400;
     font-style: normal;
     transition: 0.3s;
+}
+
+.form-button {
+    grid-row: 2;
+    border-radius: 15px;
+    border-color: pink;
+    background-color: whitesmoke;
+    color: black;
+    padding: 5px;
+    font-family: "Luckiest Guy", cursive;
+    font-weight: 400;
+    font-style: normal;
+    transition: 0.3s;
+}
+
+.form-button:hover {
+    background-color: pink;
+    border-color: white;
+    color: whitesmoke;
+    cursor: pointer;
 }
 
 .button:hover {

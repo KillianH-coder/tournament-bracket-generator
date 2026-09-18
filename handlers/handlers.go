@@ -1,38 +1,36 @@
 package handlers
 
 import (
+	"tournament/generator"
+	"tournament/models"
+
 	"html/template"
 	"net/http"
-	"slices"
 )
 
 // Parse all templates
 var tmpl = template.Must(template.ParseGlob("./templates/*.html"))
 
-// Struct for datas
-type Datas struct {
-	Error           string
-	Names           []string
-	Rounds          [][][]string
-	GenerateBracket bool
-	StartSimulation bool
-}
-
-var datas = &Datas{}
+var datas = models.Datas
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+
 	if r.Method == http.MethodPost {
 		action := r.FormValue("action")
 
 		switch action {
 		case "add":
-			AddNameHandler(w, r)
+			generator.AddNameHandler(w, r)
 		case "clear":
-			ClearNamesHandler(w, r)
+			generator.ClearNamesHandler(w, r)
 		case "generate":
-			CreateBracket(w, r)
+			generator.CreateBracket(w, r)
 		case "delete":
-			DeleteBracket(w, r)
+			generator.DeleteBracket(w, r)
 		}
 		return
 	}
@@ -57,133 +55,14 @@ func SimulationHandler(w http.ResponseWriter, r *http.Request) {
 		action := r.FormValue("simulation")
 		switch action {
 		case "start":
-			datas.StartSimulation = true
+			generator.StartSimulation(w, r)
 		case "stop":
-			datas.StartSimulation = false
+			generator.StopSimulation(w, r)
+		case "home":
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 		}
+		return
 	}
 
 	tmpl.ExecuteTemplate(w, "simulation.html", datas)
-}
-
-// Add players to the list
-func AddNameHandler(w http.ResponseWriter, r *http.Request) {
-	name := r.FormValue("name")
-
-	// If name is empty
-	if name == "" {
-		datas.Error = "Name cannot be empty"
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-		return
-	}
-
-	// If name have more than 10 chars
-	if len(name) > 10 {
-		datas.Error = "Name cannot be longer than 10 characters"
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-		return
-	}
-
-	// If name already exist
-	if slices.Contains(datas.Names, name) {
-		datas.Error = "Name already exists"
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-		return
-	}
-
-	datas.Names = append(datas.Names, name)
-
-	http.Redirect(w, r, "/", http.StatusSeeOther)
-}
-
-// Clear the list
-func ClearNamesHandler(w http.ResponseWriter, r *http.Request) {
-	datas.Names = []string{}
-
-	http.Redirect(w, r, "/", http.StatusSeeOther)
-}
-
-// Create the bracket
-func CreateBracket(w http.ResponseWriter, r *http.Request) {
-	if datas.GenerateBracket {
-		datas.Error = "delete bracket first before creating a new one"
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-		return
-	}
-
-	datas.Rounds = [][][]string{}
-	players := len(datas.Names)
-	names := datas.Names
-	firstRound := [][]string{}
-
-	if players > 32 {
-		datas.Error = "too much players"
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-		return
-	}
-
-	if players < 2 {
-		datas.Error = "not enough players"
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-		return
-	}
-
-	datas.GenerateBracket = true
-
-	switch {
-	case len(names) <= 4:
-		for len(names) < 4 {
-			names = append(names, "empty")
-		}
-	case len(names) <= 8:
-		for len(names) < 8 {
-			names = append(names, "empty")
-		}
-	case len(names) <= 16:
-		for len(names) < 16 {
-			names = append(names, "empty")
-		}
-	case len(names) <= 32:
-		for len(names) < 32 {
-			names = append(names, "empty")
-		}
-	}
-
-	// Add bracket first round
-	for index := 0; index < len(names); index += 2 {
-		firstRound = append(firstRound, []string{names[index], names[index+1]})
-	}
-	datas.Rounds = append(datas.Rounds, firstRound)
-
-	// Add next rounds (add datas.Rounds[1, etc...])
-	for matches := len(datas.Rounds[0]) / 2; matches >= 1; matches /= 2 {
-		round := [][]string{}
-
-		for i := 0; i < matches; i++ {
-			round = append(round, []string{"", ""})
-		}
-
-		datas.Rounds = append(datas.Rounds, round)
-	}
-
-	http.Redirect(w, r, "/", http.StatusSeeOther)
-}
-
-// Delete the bracket
-func DeleteBracket(w http.ResponseWriter, r *http.Request) {
-	datas.GenerateBracket = false
-	datas.Rounds = [][][]string{}
-
-	http.Redirect(w, r, "/", http.StatusSeeOther)
-}
-
-func StartSimulation(w http.ResponseWriter, r *http.Request) {
-	if !datas.StartSimulation {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-		datas.Error = "simulation already started"
-		return
-	}
-}
-
-func Winner(w http.ResponseWriter, r *http.Request) {
 }

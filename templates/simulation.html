@@ -4,15 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
     <title>Tournament Simulation</title>
 </head>
 
-<body>
-    <h1>Simulation</h1>
+<body class="simulation-body">
+    <h1 class="title">Simulation</h1>
 
     <div class="bracket">
-        {{if .StartSimulation}}
         {{range .Rounds}}
         <div class="bracket-column-match" id="bracket">
             {{range .}}
@@ -24,7 +33,14 @@
             {{end}}
         </div>
         {{end}}
-        {{end}}
+    </div>
+
+    <div class="simulation">
+        <form action="/simulation" class="form-simulation" method="post">
+            <button class="button" type="submit" name="simulation" value="start">Start Simulation</button>
+            <button class="button" type="submit" name="simulation" value="stop">Stop Simulation</button>
+            <button class="button" type="submit" name="simulation" value="home">Return Home</button>
+        </form>
     </div>
 
 </body>
