@@ -6,7 +6,14 @@ type datas struct {
 	Names           []string
 	Rounds          [][][]string
 	GenerateBracket bool
-	StartSimulation bool
+}
+
+type simulation struct {
+	SimulationRounds  [][][]string
+	Player1           string
+	Player2           string
+	SimulationStarted bool
 }
 
 var Datas = &datas{}
+var Simulation = &simulation{}

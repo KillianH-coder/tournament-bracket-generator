@@ -2,23 +2,36 @@ package generator
 
 import (
 	"net/http"
+	"tournament/models"
 )
 
+var simulation = models.Simulation
+
 func StartSimulation(w http.ResponseWriter, r *http.Request) {
-	if !datas.StartSimulation {
+	if !simulation.SimulationStarted {
 		datas.Error = "simulation already started"
 		http.Redirect(w, r, "/simulation", http.StatusSeeOther)
 		return
 	}
 
-	datas.StartSimulation = true
+	simulation.SimulationStarted = true
 }
 
 func StopSimulation(w http.ResponseWriter, r *http.Request) {
-	datas.StartSimulation = false
+	simulation.SimulationStarted = false
 
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, "/simulation", http.StatusSeeOther)
 }
 
-func Winner(w http.ResponseWriter, r *http.Request) {
+func ChooseWinner(w http.ResponseWriter, r *http.Request) {
+	// stop at the current match
+}
+
+func DecideWinner(w http.ResponseWriter, r *http.Request) {
+	winner := r.FormValue("winner")
+
+	if !simulation.SimulationStarted {
+		datas.Error = "Simulation not started"
+		return
+	}
 }

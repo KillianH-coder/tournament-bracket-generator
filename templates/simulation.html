@@ -23,7 +23,7 @@
 
     <div class="bracket">
         {{range .Rounds}}
-        <div class="bracket-column-match" id="bracket">
+        <div class="bracket-column-match">
             {{range .}}
             <div class="bracket-match">
                 {{range .}}
@@ -34,6 +34,15 @@
         </div>
         {{end}}
     </div>
+
+    {{if .StartSimulation}}
+    <div class="simulation">
+        <form class="form-simulation" method="post">
+            <button class="button" type="submit" name="winner" value="{{.Player1}}">{{.Player1}}</button>
+            <button class="button" type="submit" name="winner" value="{{.Player2}}">{{.Player2}}</button>
+        </form>
+    </div>
+    {{end}}
 
     <div class="simulation">
         <form action="/simulation" class="form-simulation" method="post">

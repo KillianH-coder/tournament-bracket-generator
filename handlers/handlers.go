@@ -12,6 +12,7 @@ import (
 var tmpl = template.Must(template.ParseGlob("./templates/*.html"))
 
 var datas = models.Datas
+var simulation = models.Simulation
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
@@ -40,7 +41,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 func SimulationHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
-		if datas.StartSimulation {
+		if simulation.SimulationStarted {
 			datas.Error = "simulation already started"
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
@@ -56,6 +57,7 @@ func SimulationHandler(w http.ResponseWriter, r *http.Request) {
 		switch action {
 		case "start":
 			generator.StartSimulation(w, r)
+			generator.DecideWinner(w, r)
 		case "stop":
 			generator.StopSimulation(w, r)
 		case "home":
