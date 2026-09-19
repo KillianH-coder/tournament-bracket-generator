@@ -23,12 +23,12 @@ func StopSimulation(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/simulation", http.StatusSeeOther)
 }
 
-func ChooseWinner(w http.ResponseWriter, r *http.Request) {
-	// stop at the current match
+func SimulationState(w http.ResponseWriter, r *http.Request) {
+	// store the current match
 }
 
 func DecideWinner(w http.ResponseWriter, r *http.Request) {
-	winner := r.FormValue("winner")
+	// winner := r.FormValue("winner")
 
 	if !simulation.SimulationStarted {
 		datas.Error = "Simulation not started"
