@@ -11,15 +11,17 @@ import (
 // Parse all templates
 var tmpl = template.Must(template.ParseGlob("./templates/*.html"))
 
+// structs
 var datas = models.Datas
-var simulation = models.Simulation
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	// 404
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
 	}
 
+	// buttons
 	if r.Method == http.MethodPost {
 		action := r.FormValue("action")
 
@@ -40,31 +42,39 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func SimulationHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
-		if simulation.SimulationStarted {
-			datas.Error = "simulation already started"
-			http.Redirect(w, r, "/", http.StatusSeeOther)
-			return
+	// GET for the page
+	if r.Method != http.MethodPost {
+		if !datas.Started {
+			datas.SimulationRounds = generator.CopyRounds(datas.Rounds)
 		}
-
-		if !datas.GenerateBracket {
-			datas.Error = "generate bracket first"
-			http.Redirect(w, r, "/", http.StatusSeeOther)
-			return
-		}
-
-		action := r.FormValue("simulation")
-		switch action {
-		case "start":
-			generator.StartSimulation(w, r)
-			generator.DecideWinner(w, r)
-		case "stop":
-			generator.StopSimulation(w, r)
-		case "home":
-			http.Redirect(w, r, "/", http.StatusSeeOther)
-		}
+		tmpl.ExecuteTemplate(w, "simulation.html", datas)
 		return
 	}
 
-	tmpl.ExecuteTemplate(w, "simulation.html", datas)
+	// buttons
+	switch r.FormValue("simulation") {
+	case "start":
+		if datas.Started {
+			datas.Error = "simulation already started"
+		} else if !datas.GenerateBracket {
+			datas.Error = "generate bracket first"
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+			return
+		} else {
+			generator.StartSimulation(datas.Rounds)
+		}
+	// If a winner exist
+	case "winner":
+		if err := generator.DecideWinner(r.FormValue("winner")); err != nil {
+			datas.Error = err.Error()
+		}
+	case "stop":
+		generator.StopSimulation(datas.Rounds)
+	case "home":
+		generator.StopSimulation(datas.Rounds)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	http.Redirect(w, r, "/simulation", http.StatusSeeOther)
 }

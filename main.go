@@ -15,6 +15,10 @@ func main() {
 	// Handle assets
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets"))))
 
-	fmt.Println("Running on http://localhost:8080")
+	fmt.Println(
+		"  __________________________________\n",
+		"| Running on http://localhost:8080 |\n",
+		"|__________________________________|",
+	)
 	http.ListenAndServe(":8080", nil)
 }

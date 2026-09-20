@@ -21,8 +21,12 @@
 <body class="simulation-body">
     <h1 class="title">Simulation</h1>
 
+    {{if .Winner}}
+    <h2 class="winner">The winner is {{.Winner}} !!!</h2>
+    {{end}}
+
     <div class="bracket">
-        {{range .Rounds}}
+        {{range .SimulationRounds}}
         <div class="bracket-column-match">
             {{range .}}
             <div class="bracket-match">
@@ -35,9 +39,11 @@
         {{end}}
     </div>
 
-    {{if .StartSimulation}}
+    {{if and .Started (not .Winner)}}
+    <p class="choose-winner">Choose the winner</p>
     <div class="simulation">
         <form class="form-simulation" method="post">
+            <input type="hidden" name="simulation" value="winner">
             <button class="button" type="submit" name="winner" value="{{.Player1}}">{{.Player1}}</button>
             <button class="button" type="submit" name="winner" value="{{.Player2}}">{{.Player2}}</button>
         </form>

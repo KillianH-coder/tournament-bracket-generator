@@ -31,6 +31,8 @@ func CreateBracket(w http.ResponseWriter, r *http.Request) {
 
 	datas.GenerateBracket = true
 
+	// Add "empty" in the empty spaces
+	// To have a name in every 1 rounds
 	switch {
 	case len(names) <= 4:
 		for len(names) < 4 {

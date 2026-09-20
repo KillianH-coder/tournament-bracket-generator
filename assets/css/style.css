@@ -19,7 +19,18 @@
     justify-content: center;
     background-color: rgb(126, 229, 255);
     padding: 5vw;
-    gap: 2.5vw;
+    gap: 2vw;
+}
+
+.winner {
+    display: flex;
+    justify-content: center;
+    color: pink;
+    font-family: "Titan One", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: clamp(1rem, 3.5vw, 2rem);
+    -webkit-text-stroke: 2px whitesmoke;
 }
 
 .title {
@@ -31,7 +42,7 @@
     font-family: "Titan One", sans-serif;
     font-weight: 700;
     font-style: normal;
-    font-size: clamp(1rem, 4vw, 2rem);
+    font-size: clamp(1.2rem, 3.5vw, 2rem);
     -webkit-text-stroke: 2px whitesmoke;
 }
 
@@ -76,7 +87,8 @@
     background-color: rgba(245, 245, 245, 0.3);
     border: 5px outset pink;
     border-radius: 10px;
-    width: 100%;
+    min-width: 100%;
+    width: fit-content;
     min-height: 25vw;
     height: fit-content;
     padding: 1vw;
@@ -114,14 +126,6 @@
 .match+.match {
     margin-top: -1px;
 }
-
-/* .match:first-child {
-    border-radius: 6px 6px 0 0;
-}
-
-.match:last-child {
-    border-radius: 0 0 6px 6px;
-} */
 
 /* Connector leaving a match and joining its sibling */
 .bracket-match::after {
@@ -166,6 +170,17 @@
     justify-content: center;
 }
 
+.choose-winner {
+    display: flex;
+    justify-content: center;
+    color: lightgreen;
+    font-family: "Titan One", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: clamp(1.5rem, 3.5vw, 1.5rem);
+    -webkit-text-stroke: 1px whitesmoke;
+}
+
 .form-simulation {
     display: flex;
     gap: 2vw;
@@ -208,6 +223,7 @@
     background-color: whitesmoke;
     color: black;
     padding: 5px;
+    font-size: clamp(0.6rem, 1vw, 1.3rem);
     font-family: "Luckiest Guy", cursive;
     font-weight: 400;
     font-style: normal;
@@ -255,25 +271,50 @@
 }
 
 @media (max-width: 768px) {
-    body {
-        grid-template-columns: 1fr;
-        gap: 15vw;
-        margin: 5vw;
+    .home-body {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 6vw;
+        margin: 4vw;
+    }
+
+    .simulation-body {
+        gap: 6vw;
+        padding: 4vw;
     }
 
     .list {
         grid-column: 1;
+        min-width: 0;
         width: 100%;
-        min-width: auto;
         min-height: auto;
     }
 
     .bracket {
         grid-column: 1;
-        overflow: auto;
-        min-height: 30vh;
-        height: fit-content;
-        min-width: 100%;
-        width: fit-content;
+        min-height: 50vh;
+    }
+
+    .list-buttons,
+    .form-simulation {
+        flex-wrap: wrap;
+    }
+
+    .form-list {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .form-button {
+        grid-row: auto;
+    }
+
+    .text-input {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .button,
+    .form-button {
+        font-size: 0.6rem;
+        padding: 0.5rem;
     }
 }
